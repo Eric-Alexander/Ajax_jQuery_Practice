@@ -1,0 +1,63 @@
+<html>
+<head>
+	<title>Pokedex</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script>
+	console.log('this first');
+	</script>
+	<script type="text/javascript">
+
+	     $(document).ready(function(){
+	     	console.log('this second');
+			for (var i = 1; i <= 151; i++)
+				{
+			$('body').append("<img id ='"+i+"'src='http://pokeapi.co/media/img/"+i+".png'>");
+				}
+
+	     	$('img').click(function(){
+	     		console.log($(this).attr('id'))
+	     		var stuff = $(this).attr('id')
+		        $.get("http://pokeapi.co/api/v1/pokemon/"+stuff, function(res) {
+		            console.log(res)
+		            console.log(res.types.length)
+					var html_str = "";
+					html_str += "<h2>"+res.name+"</h2>"
+					html_str +="<img src='http://pokeapi.co/media/img/"+stuff+".png'>"
+
+					html_str += "<h4>Types</h4>";
+					html_str += "<ul>"; 
+					for(var i = 0; i < res.types.length; i++) {
+					html_str += "<li>" + res.types[i].name + "</li>";
+					}
+					html_str += "</ul>";
+					html_str += "<h4>Height</h4><h5>"+res.height+"</h5>";
+					html_str += "<h4>Weight</h4><h5>"+res.weight+"</h5>";
+		        	$("#pokedex").html(html_str)
+		        	}, "json");
+	    	});
+
+	    });
+
+	</script>
+	<style type="text/css">
+
+	#pokedex{
+		border: 20px solid red;
+		width: 200px;
+		padding-left: 30px;
+		float: right;
+	}
+
+
+	</style>
+
+</head>
+<body>
+	<div id="container">
+		<div id='pokedex'>
+
+		</div>
+	</div>
+	
+</body>
+</html>
